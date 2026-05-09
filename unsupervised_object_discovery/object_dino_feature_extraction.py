@@ -112,21 +112,21 @@ def extract_multi_layer_features(processed_qkv_by_layer, num_heads, head_dim):
         attn_kk, log_kk = object_dino_similarity(k)
         attn_vv, log_vv = object_dino_similarity(v)
         
-        gem_attentions[layer_idx] = {
+        object_dino_similarities[layer_idx] = {
             'qq': attn_qq,
             'kk': attn_kk,
             'vv': attn_vv
         }
 
     # Get number of patches from attention shape
-    first_layer_attn = list(gem_attentions.values())[0]['qq']
+    first_layer_attn = list(object_dino_similarities.values())[0]['qq']
     num_patches = first_layer_attn.shape[2]  # N-1 (without CLS)
     
     # print(f"Number of patches (without CLS): {num_patches}")
     
     all_maps, map_labels = [], []
     
-    for layer_idx, attns in gem_attentions.items():
+    for layer_idx, attns in object_dino_similarities.items():
         attn = (attns["vv"] + attns["qq"] + attns["kk"]) / 3.0  # (B,H,N-1,N-1)
 
         ## ablations -Change here
