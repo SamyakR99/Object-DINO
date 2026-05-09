@@ -101,7 +101,7 @@
 # # -------------------------
 # # Helper Functions
 # # -------------------------
-# def gem_attention(x, iters=1, temp=None):
+# def object_dino_similarity(x, iters=1, temp=None):
 #     d = x.size(-1)
 #     if temp is None:
 #         temp = d ** -0.5
@@ -119,7 +119,7 @@
 #         q = attns_by_layer[layer_idx]["q"]
 #         k = attns_by_layer[layer_idx]["k"]
 #         v = attns_by_layer[layer_idx]["v"]
-#         attn = (gem_attention(q) + gem_attention(k) + gem_attention(v)) / 3.0
+#         attn = (object_dino_similarity(q) + object_dino_similarity(k) + object_dino_similarity(v)) / 3.0
 #         if head_indices is None:
 #             selected = attn[:, :].mean(1)
 #         else:
@@ -185,7 +185,7 @@
 #     all_maps, map_labels = [], []
 #     for layer_idx, tensors in processed_qkv_by_layer.items():
 #         q, k, v = tensors["q"], tensors["k"], tensors["v"]
-#         attn = (gem_attention(q) + gem_attention(k) + gem_attention(v)) / 3.0
+#         attn = (object_dino_similarity(q) + object_dino_similarity(k) + object_dino_similarity(v)) / 3.0
 #         for head_idx in range(attn.shape[1]):
 #             token_map = attn[0, head_idx].mean(0)
 #             patch_corr = token_map.reshape(int(token_map.numel()**0.5), -1)
@@ -324,7 +324,7 @@ for i, layer in enumerate(model.layer):
 # -------------------------
 # Helper Functions (from your COCO script)
 # -------------------------
-def gem_attention(x: torch.Tensor, iters: int = 1, temp: float = None) -> torch.Tensor:
+def object_dino_similarity(x: torch.Tensor, iters: int = 1, temp: float = None) -> torch.Tensor:
     d = x.size(-1)
     if temp is None:
         temp = d ** -0.5
@@ -340,7 +340,7 @@ def attn_to_patchmap_mixed(attns_by_layer, hf, wf, image, selections):
     attn_list = []
     for (layer_idx, head_indices) in selections:
         q, k, v = attns_by_layer[layer_idx]["q"], attns_by_layer[layer_idx]["k"], attns_by_layer[layer_idx]["v"]
-        attn = (gem_attention(q) + gem_attention(k) + gem_attention(v)) / 3.0
+        attn = (object_dino_similarity(q) + object_dino_similarity(k) + object_dino_similarity(v)) / 3.0
         selected = attn[:, head_indices].mean(1) if head_indices is not None else attn.mean(1)
         attn_list.append(selected)
 
@@ -465,7 +465,7 @@ for data_batch in tqdm(pope_loader, desc="Processing POPE images"):
     hf = wf = int(processed_qkv_by_layer[0]['q'].shape[2] ** 0.5)
     for layer_idx, tensors in processed_qkv_by_layer.items():
         q, k, v = tensors["q"], tensors["k"], tensors["v"]
-        attn = (gem_attention(q) + gem_attention(k) + gem_attention(v)) / 3.0
+        attn = (object_dino_similarity(q) + object_dino_similarity(k) + object_dino_similarity(v)) / 3.0
         for head_idx in range(attn.shape[1]):
             token_map = attn[0, head_idx].mean(0)
             patch_corr = token_map.reshape(hf, wf)

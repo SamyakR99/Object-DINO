@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 import time
 from torchvision import transforms
 # torch.cuda.empty_cache()
-from samyak_feature_extraction_copy import extract_multi_layer_features
+from object_dino_feature_extraction import extract_multi_layer_features
 from transformers import AutoModel
 from transformers import AutoImageProcessor, AutoModel
 from transformers.image_utils import load_image
@@ -105,7 +105,7 @@ if __name__ == "__main__":
         "--which_features",
         type=str,
         default="k",
-        choices=["k", "q", "v", "our_final_layer_heads","samyak"],
+        choices=["k", "q", "v", "our_final_layer_heads", "object_dino"],
         help="Which features to use",
     )
     parser.add_argument(
@@ -328,7 +328,7 @@ if __name__ == "__main__":
                         concatenated_heads = ko_selected_heads
                         feats = concatenated_heads.reshape(1,N_patches,-1)
                     
-                    elif args.which_features == "samyak":
+                    elif args.which_features == "object_dino":
                         # ko = processed_qkv_by_layer[last_layer_idx]['k']
                         # qo = processed_qkv_by_layer[last_layer_idx]['q']
                         # vo = processed_qkv_by_layer[last_layer_idx]['v']

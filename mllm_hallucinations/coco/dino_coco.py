@@ -37,7 +37,7 @@ patch_size = model.config.patch_size
 # -------------------------
 # 3. Self-Self Attention Function
 # -------------------------
-def gem_attention(x: torch.Tensor, iters: int = 1, temp: float = None) -> torch.Tensor:
+def object_dino_similarity(x: torch.Tensor, iters: int = 1, temp: float = None) -> torch.Tensor:
     """
     Args:
         x (torch.Tensor): The input tensor, expected shape (B, H, N, d).
@@ -76,7 +76,7 @@ def attn_to_patchmap_mixed(attns_by_layer, hf, wf, image, selections):
         q = attns_by_layer[layer_idx]["q"]
         k = attns_by_layer[layer_idx]["k"]
         v = attns_by_layer[layer_idx]["v"]
-        attn = (gem_attention(q) + gem_attention(k) + gem_attention(v)) / 3.0
+        attn = (object_dino_similarity(q) + object_dino_similarity(k) + object_dino_similarity(v)) / 3.0
 
         if head_indices is None:
             selected = attn[:, :].mean(1)
@@ -183,7 +183,7 @@ for idx in tqdm(indices):
     map_labels = []
     for layer_idx, tensors in processed_qkv_by_layer.items():
         q, k, v = tensors["q"], tensors["k"], tensors["v"]
-        attn = (gem_attention(q) + gem_attention(k) + gem_attention(v)) / 3.0
+        attn = (object_dino_similarity(q) + object_dino_similarity(k) + object_dino_similarity(v)) / 3.0
         for head_idx in range(attn.shape[1]):
             token_map = attn[0, head_idx].mean(0)  # average over queries
             patch_corr = token_map.reshape(hf, wf)
@@ -263,7 +263,7 @@ for idx in tqdm(indices):
             image=img_pil,  # PIL image
             selections=best_cluster_heads,  # list of tuples [(layer, [heads])]
         )
-    # maps = attn_to_patchmap_mixed(best_cluster_heads, gem_attention, hf, wf)
+    # maps = attn_to_patchmap_mixed(best_cluster_heads, object_dino_similarity, hf, wf)
     visualize_and_save_maps(img_pil, maps, img_id, split)
     # print(f"Saved results in {save_dir}")
 

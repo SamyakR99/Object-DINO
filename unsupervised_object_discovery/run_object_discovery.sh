@@ -16,7 +16,7 @@ cd /scratch/bcyh/samyakr99/Object-DINO/unsupervised_object_discovery
 python main_tokencut_copy.py \
     --dataset VOC12 \
     --set trainval \
-    --which_features samyak \
+    --which_features object_dino \
     --arch vit_base \
     --tau -0.35
 
@@ -24,7 +24,7 @@ python main_tokencut_copy.py \
 python main_tokencut_copy.py \
     --dataset VOC07 \
     --set trainval \
-    --which_features samyak \
+    --which_features object_dino \
     --arch vit_base \
     --tau -0.35
 
@@ -32,6 +32,6 @@ python main_tokencut_copy.py \
 python main_tokencut_copy.py \
     --dataset COCO20k \
     --set train \
-    --which_features samyak \
+    --which_features object_dino \
     --arch vit_base \
     --tau -0.35

@@ -7,7 +7,7 @@ from PIL import Image
 import torch.nn.functional as F
 
 
-def gem_attention(x: torch.Tensor, iters: int = 1, temp: float = None) -> torch.Tensor:
+def object_dino_similarity(x: torch.Tensor, iters: int = 1, temp: float = None) -> torch.Tensor:
     """
     Args:
         x (torch.Tensor): The input tensor, expected shape (B, H, N, d).
@@ -49,9 +49,9 @@ def attn_to_patchmap_mixed(attns_by_layer, hf, wf, image, selected_clusters):
         # Use geometric mean of attention maps from q, k, v
 
 
-        attn_q, _ = gem_attention(q)
-        attn_k, _ = gem_attention(k)
-        attn_v,_  = gem_attention(v)
+        attn_q, _ = object_dino_similarity(q)
+        attn_k, _ = object_dino_similarity(k)
+        attn_v,_  = object_dino_similarity(v)
 
         attn = (attn_q + attn_k + attn_v) / 3.0
 
@@ -97,7 +97,7 @@ def extract_multi_layer_features(processed_qkv_by_layer, num_heads, head_dim):
     a final aggregated feature representation.
     """
     qkv_by_layer = {}
-    gem_attentions = {}
+    s = {}
     
     for layer_idx, qkv_dict in processed_qkv_by_layer.items():
         q = qkv_dict['q']  # (B, num_heads, N, head_dim)
@@ -108,9 +108,9 @@ def extract_multi_layer_features(processed_qkv_by_layer, num_heads, head_dim):
         qkv_by_layer[layer_idx] = {'q': q, 'k': k, 'v': v}
         
         # Compute GEM attention for q, k, v
-        attn_qq, log_qq = gem_attention(q)
-        attn_kk, log_kk = gem_attention(k)
-        attn_vv, log_vv = gem_attention(v)
+        attn_qq, log_qq = object_dino_similarity(q)
+        attn_kk, log_kk = object_dino_similarity(k)
+        attn_vv, log_vv = object_dino_similarity(v)
         
         gem_attentions[layer_idx] = {
             'qq': attn_qq,
@@ -192,9 +192,9 @@ def extract_multi_layer_features(processed_qkv_by_layer, num_heads, head_dim):
         v = qkv_by_layer[layer_idx]['v']
         
         # Compute average GEM attention for q, k, v
-        attn_qq, log_qq = gem_attention(q)
-        attn_kk, log_kk = gem_attention(k)
-        attn_vv, log_vv = gem_attention(v)
+        attn_qq, log_qq = object_dino_similarity(q)
+        attn_kk, log_kk = object_dino_similarity(k)
+        attn_vv, log_vv = object_dino_similarity(v)
         
         # Average q, k, v attentions - change here
         attn_selected = (log_kk[:, head_indices, :, :] + log_vv[:, head_indices, :, :] + log_qq[:, head_indices, :, :]) /3 
