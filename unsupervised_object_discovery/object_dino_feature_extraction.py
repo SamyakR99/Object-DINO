@@ -129,11 +129,6 @@ def extract_multi_layer_features(processed_qkv_by_layer, num_heads, head_dim):
     for layer_idx, attns in object_dino_similarities.items():
         attn = (attns["vv"] + attns["qq"] + attns["kk"]) / 3.0  # (B,H,N-1,N-1)
 
-        ## ablations -Change here
-        # attn =  attns["qq"] * 0.3 + attns["vv"]*0.3 + attns["kk"] * 0.4
-        # attn = attns['vv'] #(attns["vv"] + attns["qq"] + attns["kk"]) / 3.0  # (B,H,N-1,N-1)
-        # attn = attns['qq'] #(attns["vv"] + attns["qq"] + attns["kk"]) / 3.0  # (B,H,N-1,N-1)
-        # attn = attns['kk'] #(attns["vv"] + attns["qq"] + attns["kk"]) / 3.0  # (B,H,N-1,N-1)
         
         for head_idx in range(attn.shape[1]):
             attn_head = attn[0, head_idx]           # (N-1, N-1)
