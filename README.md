@@ -1,14 +1,24 @@
-# Object-DINO 🦕
+<p align="center">
+  <img src="docs/gif/reaction.gif" alt="Reaction Demo" width="45%">
+  <img src="docs/gif/trex.gif" alt="Trex Demo" width="45%">
+</p>
 
-**Object-DINO** leverages DINOv3 features for two applications: unsupervised object discovery and reducing hallucinations in Multi-modal Large Language Models (MLLMs).
+# Object-DINO: Finding Distributed Object-Centric Properties in Self-Supervised Transformers
+
+
+[![Paper](https://img.shields.io/badge/Paper-arXiv%3A2506.20936-b31b1b.svg)](https://arxiv.org/abs/2603.26127)
+[![Project Page](https://img.shields.io/badge/Project-physrig.github.io-blue)]()
+[![CVPR 2026 (Highlight)](https://img.shields.io/badge/CVPR-2026-red)](https://cvpr.thecvf.com/)
+
+
+**Object-DINO** is a training-free method that extracts distributed, object-centric information from self-supervised Vision Transformers (such as DINO). It leverages this localized visual evidence for two applications: unsupervised object discovery and mitigating object hallucinations in Multimodal Large Language Models (MLLMs).
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```
 Object-DINO/
-├── analysis/                          # Analysis and evaluation scripts
 ├── unsupervised_object_discovery/     # Application 1: Object discovery via TokenCut
 └── mllm_hallucinations/               # Application 2: MLLM hallucination mitigation
     ├── coco/                          # COCO guided caption generation
@@ -19,13 +29,13 @@ Object-DINO/
 
 ---
 
-## ⚙️ Environments
+## Environments
 
 | Environment | Used For |
 |---|---|
 | `dinov3_env` | Unsupervised Object Discovery |
-| `llava` | MLLM guidance generation (LLaVA 1.5) |
-| `marine` | POPE & CHAIR evaluation (login node, no GPU) |
+| `llava` | MLLM guidance generation  |
+| `marine` | POPE & CHAIR evaluation |
 
 ### Creating the Environments
 
@@ -40,29 +50,15 @@ conda env create -f envs/marine.yml
 
 ---
 
-## 🔍 Application 1: Unsupervised Object Discovery
+## Application 1: Unsupervised Object Discovery
 
-Runs TokenCut with our custom DINOv3-based feature extraction (`object_dino_feature_extraction.py`) on standard object discovery benchmarks.
+This application replaces the standard TokenCut baseline (which natively uses all final-layer heads) with our custom, dynamically selected set of object-centric heads distributed across the network (`object_dino_feature_extraction.py`).
 
 ### Datasets
 Datasets are pre-stored at `/scratch/bcyh/dataset/` — no downloads needed.
 - `VOC07` → `/scratch/bcyh/dataset/VOC2007/`
 - `VOC12` → `/scratch/bcyh/dataset/VOC2012/`
 - `COCO20k` → `/scratch/bcyh/dataset/coco20k/`
-
-### Quick Test (VOC07)
-
-```bash
-# Interactive (srun)
-srun --account=bcyh-delta-gpu --partition=gpuA40x4 --gpus=1 --mem=32g --time=00:30:00 --pty bash -c "
-source /scratch/bcyh/miniconda3/etc/profile.d/conda.sh && conda activate dinov3_env &&
-cd /scratch/bcyh/samyakr99/Object-DINO/unsupervised_object_discovery &&
-python -u main_tokencut_copy.py --dataset VOC07 --set trainval --which_features object_dino --arch vit_base --tau -0.35
-"
-
-# Or as a batch job
-sbatch unsupervised_object_discovery/run_quick_test.sh
-```
 
 ### Full Run (VOC07 + VOC12 + COCO20k)
 
@@ -82,9 +78,9 @@ sbatch unsupervised_object_discovery/run_object_discovery.sh
 
 ---
 
-## 🧠 Application 2: MLLM Hallucination Mitigation
+## Application 2: MLLM Hallucination Mitigation
 
-Our method generates attention-highlighted images using DINOv3, then uses them to guide LLaVA 1.5's decoding via logit blending:
+Our method provides explicit visual grounding by generating object-centric similarity maps using DINOv3. These maps are used to guide LLaVA 1.5's decoding process via logit blending, amplifying tokens that are consistent with the visual evidence to reduce hallucination:
 
 ```
 combined_logits = α · logits(original image) + (1 - α) · logits(highlighted image)
@@ -100,17 +96,12 @@ Pre-generated highlighted images are stored at:
 
 ---
 
-### Step 1 — Guidance Generation (GPU, `llava` env)
+### Step 1 — Guidance Generation (`llava` env)
 
 Runs LLaVA 1.5 with α-guided decoding across all three benchmarks:
 
 ```bash
 sbatch mllm_hallucinations/run_quick_test.sh
-```
-
-Monitor logs:
-```bash
-tail -f mllm_hallucinations/quick_test_<JOBID>.log
 ```
 
 This runs sequentially:
@@ -120,9 +111,7 @@ This runs sequentially:
 
 ---
 
-### Step 2 — Evaluation (Login Node, `marine` env)
-
-Run **after** Step 1 completes. No GPU needed.
+### Step 2 — Evaluation (`marine` env)
 
 ```bash
 conda activate marine
@@ -172,15 +161,15 @@ python eval_mme.py
 
 ---
 
-## 📖 Citation
+## Citation
 
 If you find this work useful, please consider citing:
 
 ```bibtex
-@article{object_dino2024,
-  title     = {Object-DINO: Grounding MLLMs and Unsupervised Discovery},
-  author    = {},
-  journal   = {arXiv},
-  year      = {2024}
+@article{rawlekar2026finding,
+  title={Finding Distributed Object-Centric Properties in Self-Supervised Transformers},
+  author={Rawlekar, Samyak and Swain, Amitabh and Cai, Yujun and Wang, Yiwei and Yang, Ming-Hsuan and Ahuja, Narendra},
+  journal={arXiv preprint arXiv:2603.26127},
+  year={2026}
 }
 ```
