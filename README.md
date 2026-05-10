@@ -27,6 +27,17 @@ Object-DINO/
 | `llava` | MLLM guidance generation (LLaVA 1.5) |
 | `marine` | POPE & CHAIR evaluation (login node, no GPU) |
 
+### Creating the Environments
+
+We provide exported conda environments in the `envs/` directory. You can recreate them using:
+
+```bash
+# Create the environments
+conda env create -f envs/dinov3_env.yml
+conda env create -f envs/llava.yml
+conda env create -f envs/marine.yml
+```
+
 ---
 
 ## 🔍 Application 1: Unsupervised Object Discovery
