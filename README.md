@@ -6,7 +6,7 @@
 # Object-DINO: Finding Distributed Object-Centric Properties in Self-Supervised Transformers
 
 
-[![Paper](https://img.shields.io/badge/Paper-arXiv%3A2506.20936-b31b1b.svg)](https://arxiv.org/abs/2603.26127)
+[![Paper](https://img.shields.io/badge/Paper-arXiv%3A2603.26127-b31b1b.svg)](https://arxiv.org/abs/2603.26127)
 [![Project Page](https://img.shields.io/badge/Project-object_dino.github.io-blue)]()
 [![CVPR 2026 (Highlight)](https://img.shields.io/badge/CVPR%202026-Highlight-red)](https://cvpr.thecvf.com/)
 
