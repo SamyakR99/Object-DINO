@@ -7,7 +7,7 @@
 
 
 [![Paper](https://img.shields.io/badge/Paper-arXiv%3A2506.20936-b31b1b.svg)](https://arxiv.org/abs/2603.26127)
-[![Project Page](https://img.shields.io/badge/Project-physrig.github.io-blue)]()
+[![Project Page](https://img.shields.io/badge/Project-object_dino.github.io-blue)]()
 [![CVPR 2026 (Highlight)](https://img.shields.io/badge/CVPR-2026-red)](https://cvpr.thecvf.com/)
 
 
