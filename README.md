@@ -151,6 +151,14 @@ python eval_mme.py
 
 ---
 
+## Acknowledgments
+
+This repository builds upon several excellent open-source projects. We would like to thank the authors of:
+- [TokenCut](https://github.com/YangtaoWANG95/TokenCut)
+- [DeGF](https://github.com/zhangce01/DeGF)
+
+---
+
 ## Citation
 
 If you find this work useful, please consider citing:
@@ -163,11 +171,3 @@ If you find this work useful, please consider citing:
   year={2026}
 }
 ```
-
----
-
-## Acknowledgments
-
-This repository builds upon several excellent open-source projects. We would like to thank the authors of:
-- [TokenCut](https://github.com/YangtaoWANG95/TokenCut)
-- [DeGF](https://github.com/zhangce01/DeGF)
