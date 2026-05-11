@@ -3,7 +3,7 @@
   <img src="docs/gif/trex.gif" alt="Trex Demo" width="45%">
 </p>
 
-# Object-DINO: Finding Distributed Object-Centric Properties in Self-Supervised Transformers
+# [CVPR 2026 Highlight] Object-DINO
 
 
 [![Paper](https://img.shields.io/badge/Paper-arXiv%3A2603.26127-b31b1b.svg)](https://arxiv.org/abs/2603.26127)
@@ -163,3 +163,11 @@ If you find this work useful, please consider citing:
   year={2026}
 }
 ```
+
+---
+
+## Acknowledgments
+
+This repository builds upon several excellent open-source projects. We would like to thank the authors of:
+- [TokenCut](https://github.com/YangtaoWANG95/TokenCut)
+- [DeGF](https://github.com/zhangce01/DeGF)
