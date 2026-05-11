@@ -81,12 +81,8 @@ combined_logits = α · logits(original image) + (1 - α) · logits(highlighted 
 ```
 
 ### Highlighted Images
-Pre-generated highlighted images are stored at:
-- **COCO/CHAIR**: `/scratch/bcyh/samyakr99/chair_experiment/results/` (501 images)
-- **POPE**: `/scratch/bcyh/samyakr99/chair_experiment/results_pope_*/` (500 each: adv, popular, random)
-- **MME**: `/scratch/bcyh/samyakr99/chair_experiment/results_mme/` (existence, color, count, position)
 
-> To regenerate highlighted images, run `dino_coco.py` / `dino_pope.py` / `dino_mme.py` with `dinov3_env`.
+To generate highlighted images, run `dino_coco.py`, `dino_pope.py`, or `dino_mme.py` using the `dinov3_env` environment.
 
 ---
 
