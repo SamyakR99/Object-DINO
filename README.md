@@ -119,29 +119,29 @@ This runs:
 
 #### POPE only
 ```bash
-# Guidance (llava env, GPU)
+# Guidance (llava env)
 cd mllm_hallucinations/pope
 CUDA_VISIBLE_DEVICES=0 python -u guidance_pope.py
 
-# Eval (marine env, login node)
+# Eval (marine env)
 python convert_pope.py
 python eval_pope.py
 ```
 
 #### CHAIR only
 ```bash
-# Guidance (llava env, GPU)
+# Guidance (llava env)
 cd mllm_hallucinations/coco
 CUDA_VISIBLE_DEVICES=0 python -u guidance_coco.py
 
-# Eval (marine env, login node)
+# Eval (marine env)
 cd mllm_hallucinations/chair
 bash chair_alpha.sh
 ```
 
 #### MME only
 ```bash
-# Guidance (llava env, GPU)
+# Guidance (llava env)
 cd mllm_hallucinations/mme
 CUDA_VISIBLE_DEVICES=0 python -u guidance_mme.py
 
