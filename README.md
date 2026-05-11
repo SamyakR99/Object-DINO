@@ -52,10 +52,7 @@ conda env create -f envs/marine.yml
 This application replaces the standard TokenCut baseline (which natively uses all final-layer heads) with our custom, dynamically selected set of object-centric heads distributed across the network (`object_dino_feature_extraction.py`).
 
 ### Datasets
-Datasets are pre-stored at `/scratch/bcyh/dataset/` — no downloads needed.
-- `VOC07` → `/scratch/bcyh/dataset/VOC2007/`
-- `VOC12` → `/scratch/bcyh/dataset/VOC2012/`
-- `COCO20k` → `/scratch/bcyh/dataset/coco20k/`
+Please refer to [`Download_data.md`](Download_data.md) for downloading VOC2007, VOC2012, and COCO 2014 datasets.
 
 ### Full Run (VOC07 + VOC12 + COCO20k)
 
