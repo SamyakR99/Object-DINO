@@ -18,12 +18,12 @@
 
 ```
 Object-DINO/
-├── unsupervised_object_discovery/     # Application 1: Object discovery via TokenCut
-└── mllm_hallucinations/               # Application 2: MLLM hallucination mitigation
-    ├── coco/                          # COCO guided caption generation
-    ├── chair/                         # CHAIR evaluation
-    ├── pope/                          # POPE evaluation
-    └── mme/                           # MME evaluation
+├── unsupervised_object_discovery/     
+└── mllm_hallucinations/               
+    ├── coco/                          
+    ├── chair/                         
+    ├── pope/                          
+    └── mme/                           
 ```
 
 ---
@@ -37,8 +37,6 @@ Object-DINO/
 | `marine` | POPE & CHAIR evaluation |
 
 ### Creating the Environments
-
-We provide exported conda environments in the `envs/` directory. You can recreate them using:
 
 ```bash
 # Create the environments
