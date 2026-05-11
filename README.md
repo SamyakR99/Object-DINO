@@ -6,8 +6,8 @@
 # [CVPR 2026 Highlight] Object-DINO
 
 
-[![Paper](https://img.shields.io/badge/Paper Arxiv-b31b1b.svg)](https://arxiv.org/abs/2603.26127)
-[![Project Page](https://img.shields.io/badge/Project Page-blue)](https://samyakr99.github.io/Object_dino/)
+[![Paper](https://img.shields.io/badge/Arxiv-b31b1b.svg)](https://arxiv.org/abs/2603.26127)
+[![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://samyakr99.github.io/Object_dino/)
 [![CVPR 2026 (Highlight)](https://img.shields.io/badge/CVPR%202026-red)](https://cvpr.thecvf.com/)
 
 **Object-DINO** is a training-free method that extracts distributed, object-centric information from self-supervised Vision Transformers (such as DINO). It leverages this localized visual evidence for two applications: unsupervised object discovery and mitigating object hallucinations in Multimodal Large Language Models (MLLMs).
